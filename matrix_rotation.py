@@ -1,7 +1,4 @@
 import pprint
-from random import randint
-
-m = [[randint(1, 50) for _ in range(10)] for x in range(1, 100, 10)]
 
 
 def rot_right(arr):
@@ -36,14 +33,19 @@ def rot_right_in_place(arr):
         column += 1
     return arr
 
-pprint.pprint(m)
 
-r = rot_right(m)
+def main(matrix):
+    pprint.pprint(matrix)
+
+    rotated = rot_right(matrix)
+
+    pprint.pprint(rotated)
+
+    pprint.pprint((rot_right_in_place(matrix)))
+
+    print(rot_right(matrix) == rot_right_in_place(matrix))
 
 
-pprint.pprint(r)
-
-
-pprint.pprint((rot_right_in_place(m)))
-
-print(rot_right(m) == rot_right_in_place(m))
+if __name__ == "__main__":
+    matrix = [[x for x in range(10)] for _ in range(1, 100, 10)]
+    main(matrix)

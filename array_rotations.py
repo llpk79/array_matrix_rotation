@@ -1,10 +1,5 @@
-from random import randint
 from collections import deque
 from timeit import default_timer as timer
-
-a = [x for x in range(50000)]
-rotations = 20000
-b = deque(a)
 
 
 def pop_rot_left(array, rots):
@@ -33,40 +28,47 @@ def modulo_rot_left(array, rots):
     return new_array
 
 
-times = {}
+def main(array, rotations):
+    b = deque(array)
+    times = {}
+
+    then = timer()
+    print(pop_rot_left(array, rotations))
+    now = timer()
+    pops = now - then
+    times[pops] = 'pops'
+    print('pops', pops)
+
+    then = timer()
+    print(deque_rot_left(b, rotations))
+    now = timer()
+    deq = now - then
+    times[deq] = 'deq'
+    print('deq', deq)
+
+    then = timer()
+    print(slice_rot_left(array, rotations))
+    now = timer()
+    slices = now - then
+    times[slices] = 'slices'
+    print('slices', slices)
+
+    then = timer()
+    print(modulo_rot_left(array, rotations))
+    now = timer()
+    mod = now - then
+    times[mod] = 'mod'
+    print('mod', mod)
+
+    times = list(sorted(times.items()))
+    print('times',times)
+    print(f'{times[0][1]} is {times[1][0]/times[0][0]} x faster than {times[1][1]} is {times[2][0]/times[1][0]} x'
+          f'faster than {times[2][1]} is {times[3][0]/times[2][0]} x faster than {times[3][1]}')
 
 
-then = timer()
-print(pop_rot_left(a, rotations))
-now = timer()
-pops = now - then
-times[pops] = 'pops'
-print('pops', pops)
+if __name__ == "__main__":
 
-then = timer()
-print(deque_rot_left(b, rotations))
-now = timer()
-deq = now - then
-times[deq] = 'deq'
-print('deq', deq)
+    a = [x for x in range(50000)]
+    rotations = 20000
 
-then = timer()
-print(slice_rot_left(a, rotations))
-now = timer()
-slices = now - then
-times[slices] = 'slices'
-print('slices', slices)
-
-then = timer()
-print(modulo_rot_left(a, rotations))
-now = timer()
-mod = now - then
-times[mod] = 'mod'
-print('mod', mod)
-
-
-times = list(sorted(times.items()))
-print(times)
-print(f'{times[0][1]} is {times[1][0]/times[0][0]} x faster than {times[1][1]} is {times[2][0]/times[1][0]} x'
-      f'faster than {times[2][1]} is {times[3][0]/times[2][0]} x faster than {times[3][1]}')
-
+    main(a, rotations)
